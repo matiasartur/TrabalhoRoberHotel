@@ -7,7 +7,7 @@ public class Cancelar {
     @SuppressWarnings("resource")
      public static void cancelarReserva() {
         
-        System.out.println("===== CANNCELAR RESERVA =====");
+        System.out.println("===== CANCELAR RESERVA =====");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -30,6 +30,8 @@ public class Cancelar {
                 Reserva.numerosQuartos[i] = Reserva.numerosQuartos[i + 1];
                 Reserva.entradasData[i] = Reserva.entradasData[i + 1];
                 Reserva.saidasData[i] = Reserva.saidasData[i + 1];
+                Reserva.nomesReservistas[i] = Reserva.nomesReservistas[i + 1];
+                Reserva.quantidadePessoas[i] = Reserva.quantidadePessoas[i + 1]; 
             }
 
             Reserva.total--;

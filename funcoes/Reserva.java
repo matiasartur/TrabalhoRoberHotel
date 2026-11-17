@@ -46,11 +46,13 @@ public class Reserva {
         System.out.print("Número do quarto: ");
         int numeroQuarto = scanner.nextInt();
 
-        // Confere se o quarto já está cadastrado ~matias
+        // Confere se o quarto já está cadastrado e guarda a posição dele ~matias
         boolean existe = false;
+        int posicaoQuarto = -1;
         for (int i = 0; i < Cadastrar.totalQuartos; i++) {
             if (Cadastrar.numeros[i] == numeroQuarto) {
                 existe = true;
+                posicaoQuarto = i;
             }
         }
         if (!existe) {
@@ -66,93 +68,40 @@ public class Reserva {
             }
         }
 
-        System.out.println("Digite o nome do reservista: ");
-        String nome = scanner.next();
+        scanner.nextLine(); // limpa o "Enter" que sobrou do nextint ~matias
 
-        nomesReservistas[total] = nome;
+        // aceita nome e sobrenome ~matias
+        String nome = "";
+        while (nome.trim().isEmpty()) {
+            System.out.print("Digite o nome do reservista: ");
+            nome = scanner.nextLine().trim();
+            if (nome.isEmpty()) {
+                System.out.println("O nome não pode ficar vazio!");
+            }
+        }
 
-        System.out.println("Quantidade de pessoas hospedando: ");
+        System.out.print("Quantidade de pessoas hospedando: ");
         int quantidade = scanner.nextInt();
-        
+
         //Confere se a quantidade de hóspedes não excede a capacidade do quarto ~augusto
-        if (quantidade > Cadastrar.capacidades[total]) {
+        if (quantidade > Cadastrar.capacidades[posicaoQuarto]) {
             System.out.println("Quantidade de hóspedes excede capacidade do quarto!");
             return;
         }
 
-        quantidadePessoas[total] = quantidade;
-
         System.out.print("Data de entrada (dd/mm/aaaa): ");
         String entrada = scanner.next();
+        if (!dataValida(entrada)) {
+            System.out.println("Data de entrada inválida! Use o formato dd/mm/aaaa.");
+            return;
+        }
 
         System.out.print("Data de saída (dd/mm/aaaa): ");
         String saida = scanner.next();
-
-        //Transforma a data em ints para poder validar ~augusto
-        int dia = Integer.parseInt(entrada.substring(0, 2));
-        int mes = Integer.parseInt(entrada.substring(2, 4));
-        int ano = Integer.parseInt(entrada.substring(4, 8));
-
-        //Verifica se o ano é bissexto ~augusto
-        boolean bissexto = false;
-
-        if (ano % 400 == 0) {
-            bissexto = true;
-        } else if (ano % 100 == 0) {
-            bissexto = false;
-        } else if (ano % 4 == 0) {
-            bissexto = true;
-        }
-
-        //Valida o mês ~augusto
-        if (mes < 1 || mes > 12) {
-            System.out.println("Mês inválido!");
+        if (!dataValida(saida)) {
+            System.out.println("Data de saída inválida! Use o formato dd/mm/aaaa.");
             return;
         }
-        
-        int limiteDias = 0;
-
-        //Valida o dia de acordo com o mês e se é bissexto ~augusto
-        if (mes == 2) {
-            
-            if (bissexto) {
-                limiteDias = 29;
-            } else {
-                limiteDias = 28;
-            }
-
-        } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
-            limiteDias = 30;
-        } else if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) { 
-            limiteDias = 31;
-        }
-
-        if (dia < 1 || dia > limiteDias) {
-            System.out.println("Dia inválido para o mês informado!");
-            return;
-        }
-
-        //Valida se a data de entrada e saída não ultrapassam 8 caracteres e formata a data para dd/mm/aaaa ~augusto
-        if (entrada.matches("\\d{8}")) {
-            entrada = entrada.substring(0, 2) + "/" +
-            entrada.substring(2, 4) + "/" +
-            entrada.substring(4, 8);
-        } else {
-            System.out.println("Data de entrada inválida!");
-            return;
-        }
-
-        if (saida.matches("\\d{8}")) {
-            saida = saida.substring(0, 2) + "/" +
-            saida.substring(2, 4) + "/" +
-            saida.substring(4, 8);
-        } else {
-            System.out.println("Data de saída inválida!");
-            return;
-        }
-
-        entradasData[total] = entrada;
-        saidasData[total] = saida;
 
         int codigo = gerarCodigo();
 
@@ -167,6 +116,50 @@ public class Reserva {
 
         System.out.println("\nCódigo da reserva: " + codigo);
         total++;
+    }
+
+    // Confere se a data está no formato dd/mm/aaaa e se ela existe de verdade ~augusto
+    public static boolean dataValida(String data) {
+
+        // Precisa ser: 2 números / 2 números / 4 números
+        if (!data.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            return false;
+        }
+
+        // Separa dia, mês e ano (pulando as barras nas posições 2 e 5)
+        int dia = Integer.parseInt(data.substring(0, 2));
+        int mes = Integer.parseInt(data.substring(3, 5));
+        int ano = Integer.parseInt(data.substring(6, 10));
+
+        if (mes < 1 || mes > 12) {
+            return false;
+        }
+
+        //Verifica se o ano é bissexto ~augusto
+        boolean bissexto = false;
+        if (ano % 400 == 0) {
+            bissexto = true;
+        } else if (ano % 100 == 0) {
+            bissexto = false;
+        } else if (ano % 4 == 0) {
+            bissexto = true;
+        }
+
+        // Define quantos dias o mês tem
+        int limiteDias;
+        if (mes == 2) {
+            if (bissexto) {
+                limiteDias = 29;
+            } else {
+                limiteDias = 28;
+            }
+        } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+            limiteDias = 30;
+        } else {
+            limiteDias = 31;
+        }
+
+        return dia >= 1 && dia <= limiteDias;
     }
 
     //fiz pra poder fazer minha parte, gera o código de reserva ~ matias

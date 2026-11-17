@@ -40,11 +40,11 @@ public class Consultar {
             } 
             //Mostra os dados do quarto e da reserva caso exista ~augusto
             if (posicaoReserva != -1) {
-                System.out.println("Quarto: " + Cadastrar.numeros[posicao]);
+                System.out.println("\nQuarto: " + Cadastrar.numeros[posicao]);
                 System.out.println("Valor: " + Cadastrar.valores[posicao]);
                 System.out.println("nome do hóspede: " + Reserva.nomesReservistas[posicao]);
                 System.out.println("Capacidade: " + Cadastrar.capacidades[posicao]);
-                System.out.println("Pessoas hospedando: " + Reserva.quantidadePessoas[posicao]);
+                System.out.println("Quantidade de pessoas hospedadas: " + Reserva.quantidadePessoas[posicao]);
                 System.out.println("Data de entrada: " + Reserva.entradasData[posicao]);
                 System.out.println("Data de saída: " + Reserva.saidasData[posicao]);
                 System.out.println("Situação: OCUPADO");
