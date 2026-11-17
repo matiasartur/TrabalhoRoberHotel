@@ -13,6 +13,7 @@ public class Consultar {
 
         System.out.println("\nDigite o número do quarto: ");
         int consult = ent.nextInt();
+        //Confere se o quarto existe ou não ~augusto
         int posicao = -1;
 
         for (int i = 0; i < Cadastrar.totalQuartos ; i++) {
@@ -37,7 +38,7 @@ public class Consultar {
                 }
             
             } 
-
+            //Mostra os dados do quarto e da reserva caso exista ~augusto
             if (posicaoReserva != -1) {
                 System.out.println("Quarto: " + Cadastrar.numeros[posicao]);
                 System.out.println("Valor: " + Cadastrar.valores[posicao]);

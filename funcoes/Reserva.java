@@ -1,6 +1,7 @@
 package funcoes;
 
 //acabei fazendo tudo, foi mal ksks ~matias
+//Matias fez tudo e eu modifiquei tudo kkk ~augusto
 
 import java.util.Random;
 import java.util.Scanner;
@@ -73,6 +74,7 @@ public class Reserva {
         System.out.println("Quantidade de pessoas hospedando: ");
         int quantidade = scanner.nextInt();
         
+        //Confere se a quantidade de hóspedes não excede a capacidade do quarto ~augusto
         if (quantidade > Cadastrar.capacidades[total]) {
             System.out.println("Quantidade de hóspedes excede capacidade do quarto!");
             return;
@@ -86,10 +88,12 @@ public class Reserva {
         System.out.print("Data de saída (dd/mm/aaaa): ");
         String saida = scanner.next();
 
+        //Transforma a data em ints para poder validar ~augusto
         int dia = Integer.parseInt(entrada.substring(0, 2));
         int mes = Integer.parseInt(entrada.substring(2, 4));
         int ano = Integer.parseInt(entrada.substring(4, 8));
 
+        //Verifica se o ano é bissexto ~augusto
         boolean bissexto = false;
 
         if (ano % 400 == 0) {
@@ -100,6 +104,7 @@ public class Reserva {
             bissexto = true;
         }
 
+        //Valida o mês ~augusto
         if (mes < 1 || mes > 12) {
             System.out.println("Mês inválido!");
             return;
@@ -107,6 +112,7 @@ public class Reserva {
         
         int limiteDias = 0;
 
+        //Valida o dia de acordo com o mês e se é bissexto ~augusto
         if (mes == 2) {
             
             if (bissexto) {
@@ -126,6 +132,7 @@ public class Reserva {
             return;
         }
 
+        //Valida se a data de entrada e saída não ultrapassam 8 caracteres e formata a data para dd/mm/aaaa ~augusto
         if (entrada.matches("\\d{8}")) {
             entrada = entrada.substring(0, 2) + "/" +
             entrada.substring(2, 4) + "/" +
