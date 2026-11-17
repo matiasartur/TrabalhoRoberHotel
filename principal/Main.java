@@ -19,7 +19,7 @@ public class Main {
             System.out.println("4 - Listar quartos");
             System.out.println("5 - Consultar quarto");
             System.out.println("0 - Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.print("\nEscolha uma opção: ");
             opcao = scanner.nextInt();
 
             switch (opcao) {

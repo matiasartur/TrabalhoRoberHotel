@@ -12,6 +12,8 @@ public class Reserva {
     static int[] numerosQuartos = new int[100];
     static String[] entradasData = new String[100];
     static String[] saidasData = new String[100];
+    static String[] nomesReservistas = new String[100];
+    static int [] quantidadePessoas = new int[100];
     static int total = 0; // CONTADOR: soma 1 ao contador depois de guardar
 
     // Pede: CPF do hóspede, número do quarto, data de entrada e data de saída
@@ -22,6 +24,8 @@ public class Reserva {
 
     public static void fazerReserva() {
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("===== FAZER RESERVA =====");
 
         // Confere se ainda cabe mais uma reserva ~matias
         if (total == 100) {
@@ -61,11 +65,87 @@ public class Reserva {
             }
         }
 
+        System.out.println("Digite o nome do reservista: ");
+        String nome = scanner.next();
+
+        nomesReservistas[total] = nome;
+
+        System.out.println("Quantidade de pessoas hospedando: ");
+        int quantidade = scanner.nextInt();
+        
+        if (quantidade > Cadastrar.capacidades[total]) {
+            System.out.println("Quantidade de hóspedes excede capacidade do quarto!");
+            return;
+        }
+
+        quantidadePessoas[total] = quantidade;
+
         System.out.print("Data de entrada (dd/mm/aaaa): ");
         String entrada = scanner.next();
 
         System.out.print("Data de saída (dd/mm/aaaa): ");
         String saida = scanner.next();
+
+        int dia = Integer.parseInt(entrada.substring(0, 2));
+        int mes = Integer.parseInt(entrada.substring(2, 4));
+        int ano = Integer.parseInt(entrada.substring(4, 8));
+
+        boolean bissexto = false;
+
+        if (ano % 400 == 0) {
+            bissexto = true;
+        } else if (ano % 100 == 0) {
+            bissexto = false;
+        } else if (ano % 4 == 0) {
+            bissexto = true;
+        }
+
+        if (mes < 1 || mes > 12) {
+            System.out.println("Mês inválido!");
+            return;
+        }
+        
+        int limiteDias = 0;
+
+        if (mes == 2) {
+            
+            if (bissexto) {
+                limiteDias = 29;
+            } else {
+                limiteDias = 28;
+            }
+
+        } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+            limiteDias = 30;
+        } else if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) { 
+            limiteDias = 31;
+        }
+
+        if (dia < 1 || dia > limiteDias) {
+            System.out.println("Dia inválido para o mês informado!");
+            return;
+        }
+
+        if (entrada.matches("\\d{8}")) {
+            entrada = entrada.substring(0, 2) + "/" +
+            entrada.substring(2, 4) + "/" +
+            entrada.substring(4, 8);
+        } else {
+            System.out.println("Data de entrada inválida!");
+            return;
+        }
+
+        if (saida.matches("\\d{8}")) {
+            saida = saida.substring(0, 2) + "/" +
+            saida.substring(2, 4) + "/" +
+            saida.substring(4, 8);
+        } else {
+            System.out.println("Data de saída inválida!");
+            return;
+        }
+
+        entradasData[total] = entrada;
+        saidasData[total] = saida;
 
         int codigo = gerarCodigo();
 
@@ -75,6 +155,8 @@ public class Reserva {
         numerosQuartos[total] = numeroQuarto;
         entradasData[total] = entrada;
         saidasData[total] = saida;
+        nomesReservistas[total] = nome;
+        quantidadePessoas[total] = quantidade;
 
         System.out.println("\nCódigo da reserva: " + codigo);
         total++;

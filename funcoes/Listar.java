@@ -4,6 +4,8 @@ public class Listar {
     
     public static void listarQuartos() {
         
+        System.out.println("===== LISTAR QUARTOS =====");
+
         // verificar se tem quartos cadastrados ~matias
         if (Cadastrar.totalQuartos == 0) {
             System.out.println("Nenhum quarto cadastrado.");
@@ -14,7 +16,7 @@ public class Listar {
         for (int i = 0; i < Cadastrar.totalQuartos; i++) {
 
             // Procura se existe alguma reserva para esse quarto
-            boolean ocupado = false; // começa camo "livre" ~matias
+            boolean ocupado = false; // começa como "livre" ~matias
             // continua enquanto j for menor que o número de reservas existentes pra ele não olhar as posições vazias do vetor ~matias
             for (int j = 0; j < Reserva.total ; j++) {
                 if (Reserva.numerosQuartos[j] == Cadastrar.numeros[i]) {

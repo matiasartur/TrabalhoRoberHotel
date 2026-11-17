@@ -17,6 +17,8 @@ public class Cadastrar {
     public static void cadastrarQuarto() {
         Scanner scanner = new Scanner(System.in); //não precisa fechar o scanner ~matias
 
+        System.out.println("===== CADASTRAR QUARTO =====");
+
         //verifica se já atingiu o limite de quartos cadastrados ~matias
         if (totalQuartos == 100) {
             System.out.print("Limite de quartos atingido!");

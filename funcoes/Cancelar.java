@@ -4,9 +4,11 @@ import java.util.Scanner;
 
 public class Cancelar {
 
-
     @SuppressWarnings("resource")
      public static void cancelarReserva() {
+        
+        System.out.println("===== CANNCELAR RESERVA =====");
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("\nDigite o código da reserva: ");
